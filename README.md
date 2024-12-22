@@ -40,3 +40,31 @@ CREATE TABLE `users` (
   `username` VARCHAR(255) NOT NULL,
   `password` VARCHAR(255) NOT NULL
 );
+
+CREATE TABLE `posts` (
+  `id` INT(11) AUTO_INCREMENT PRIMARY KEY,
+  `title` VARCHAR(255) NOT NULL,
+  `content` TEXT NOT NULL,
+  `user_id` INT(11) NOT NULL,
+  `image` VARCHAR(255) DEFAULT NULL,
+  `created_at` DATETIME NOT NULL,
+  FOREIGN KEY (`user_id`) REFERENCES `users`(`id`)
+);
+
+CREATE TABLE `comments` (
+  `id` INT(11) AUTO_INCREMENT PRIMARY KEY,
+  `post_id` INT(11) NOT NULL,
+  `user_id` INT(11) NOT NULL,
+  `content` TEXT NOT NULL,
+  `created_at` DATETIME NOT NULL,
+  FOREIGN KEY (`post_id`) REFERENCES `posts`(`id`),
+  FOREIGN KEY (`user_id`) REFERENCES `users`(`id`)
+);
+
+CREATE TABLE `likes` (
+  `id` INT(11) AUTO_INCREMENT PRIMARY KEY,
+  `post_id` INT(11) NOT NULL,
+  `user_id` INT(11) NOT NULL,
+  FOREIGN KEY (`post_id`) REFERENCES `posts`(`id`),
+  FOREIGN KEY (`user_id`) REFERENCES `users`(`id`)
+);
